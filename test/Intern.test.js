@@ -1,9 +1,9 @@
 const Intern = require("../lib/Intern");
 
 describe('Intern', () => {
-    it('should initialize correctly', () => {
-        const intern = new Intern('Matthew', '32', 'matthew@gmail.com', 'University of Adelaide');
+    const intern = new Intern('Matthew', '32', 'matthew@gmail.com', 'University of Adelaide');
 
+    it('should initialize correctly', () => {
         expect(intern.name).toBe('Matthew');
         expect(intern.id).toBe('32');
         expect(intern.email).toBe('matthew@gmail.com');
@@ -11,7 +11,10 @@ describe('Intern', () => {
     });
 
     it('get role should return Intern', () => {
-        const intern = new Intern('Matthew', '32', 'matthew@gmail.com', '65');
         expect(intern.getRole()).toBe('Intern');
+    });
+
+    it('get school should return "University of Adelaide"', () => {
+        expect(intern.getSchool()).toBe('University of Adelaide');
     });
 });
