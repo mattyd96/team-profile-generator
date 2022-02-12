@@ -1,6 +1,6 @@
 //---------------------- Packages needed for this application -------------------------------//
 //local js in utils
-const createHtml = require('./utils/createHtml');
+const createHtml = require('./src/createHtml');
 
 //external packages
 const inquirer = require('inquirer');
@@ -29,3 +29,10 @@ const writeDoc = (fileName, data) => {
         err ? console.error(err) : console.log('Commit logged!')
     );
 };
+
+
+//--------------------------------- Ask Questions -> enquirer -------------------------------//
+
+inquirer.prompt(questions).then((response) => {
+    console.log(response);
+});
