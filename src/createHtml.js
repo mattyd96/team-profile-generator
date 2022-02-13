@@ -1,5 +1,5 @@
 const createHtml = employees => {
-    console.log(employees);
+    return `${employees}`;
 };
 
 module.exports = createHtml;

@@ -21,7 +21,7 @@ const employees = [];
 
 
 const writeDoc = (fileName, data) => {
-    const text = createReadme(data);
+    const text = createHtml(data);
 
     fs.writeFile(fileName, text, (err) =>
         err ? console.error(err) : console.log('Commit logged!')
@@ -56,7 +56,7 @@ const createAnotherOrFinish = answer => {
     if(answer !== 'Finish') {
         askAndCreate(answer.toLowerCase());
     } else {
-        createHtml(employees);
+        writeDoc('./dist/index.html', employees)
     }
 }
 
