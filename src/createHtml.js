@@ -1,3 +1,6 @@
+//--------------------------------- Html file Creation -------------------------------//
+
+//create head section
 const createHead = () => {
     return `
 <!DOCTYPE html>
@@ -18,6 +21,7 @@ const createHead = () => {
     `;
 };
 
+//create start of body section
 const createBodyStart = () => {
     return `
 <body>
@@ -32,6 +36,7 @@ const createBodyStart = () => {
     `;
 };
 
+//create end of body section
 const createBodyEnd = () => {
     return `
         </section>
@@ -41,13 +46,18 @@ const createBodyEnd = () => {
     `;
 }
 
+//create card -> will go between start and end of body
 const createCard = employee => {
-    const position = employee.constructor.name;
+    const position = employee.constructor.name; //get object prototype name
+
+    //font awesome icon strings for different employee children
     const icons = {
         Manager: 'fa-mug-hot',
         Engineer: 'fa-glasses',
         Intern: 'fa-graduation-cap',
     }
+
+    //get different last element for Manager, Engineer, or Intern
     let uniqueElement;
 
     switch (position) {
@@ -62,6 +72,7 @@ const createCard = employee => {
             break;
     }
     
+    //return card element
     return`
             <!-- employee card -->
             <article class="card employee">
@@ -82,17 +93,19 @@ const createCard = employee => {
 
 };
 
-
+//main create function -> takes an array of Employee children
 const createHtml = employees => {
-    const head = createHead();
-    const bodyStart = createBodyStart();
+    const head = createHead(); //head section
+    const bodyStart = createBodyStart(); //start of body section
 
+    //create cards from employees array
     const cards = employees.map(employee => {
         return createCard(employee);
     });
 
-    const bodyEnd = createBodyEnd();
+    const bodyEnd = createBodyEnd(); //end of body
 
+    //return html file
     return head + bodyStart + cards.join('') + bodyEnd;
 };
 
