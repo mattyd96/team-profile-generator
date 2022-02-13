@@ -1,7 +1,6 @@
 //---------------------- Packages needed for this application -------------------------------//
 //local js in utils
 const createHtml = require('./src/createHtml');
-const Employee = require('./lib/Employee');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
@@ -12,68 +11,13 @@ const inquirer = require('inquirer');
 //node native packages
 const fs = require('fs');
 
-//---------------------- Array of questions for user input ----------------------------------//
-let employee;
 
-const managerQs = [
-    {
-        type: 'input',
-        message: `What is the Team Manager's Name? `,
-        name: 'managerName'
-    },
-    {
-        type: 'input',
-        message: `What is the Team Manager's employee id? `,
-        name: 'managerId'
-    },
-    {
-        type: 'input',
-        message: `What is the Team Manager's Email Address? `,
-        name: 'managerEmail'
-    },
-    {
-        type: 'input',
-        message: `What is the Team Manager's Office Number? `,
-        name: 'managerOffice'
-    },
-    {
-        type: 'list',
-        message: `Would you like to add another employee or finish? `,
-        name: 'create',
-        choices: ['Engineer', 'Intern', "Finish"]
-    },
-];
+//---------------------------------- Global Variables ---------------------------------------//
 
-const engineerQs = [
-    {
-        type: 'input',
-        message: `What is the Engineer's Name? `,
-        name: 'engineerName'
-    },
-    {
-        type: 'input',
-        message: `What is the Team Engineer's employee id? `,
-        name: 'engineerId'
-    },
-    {
-        type: 'input',
-        message: `What is the Team Engineer's Email Address? `,
-        name: 'engineerEmail'
-    },
-    {
-        type: 'input',
-        message: `What is the Team Engineer's Github username? `,
-        name: 'engineerGithub'
-    },
-    {
-        type: 'list',
-        message: `Would you like to add another employee or finish? `,
-        name: 'create',
-        choices: ['Engineer', 'Intern', "Finish"]
-    }
-];
+const employees = [];
 
-//---------------------------------- write File -----------------------------------------//
+
+//---------------------------------- write File ---------------------------------------------//
 
 
 const writeDoc = (fileName, data) => {
@@ -86,38 +30,107 @@ const writeDoc = (fileName, data) => {
 
 
 //--------------------------------- Ask Questions -> enquirer -------------------------------//
-employee = 'engineer';
 
-inquirer.prompt(managerQs).then((response) => {
-    const {managerName, managerId, managerEmail, managerOffice} = response;
-    const manager = new Manager(managerName, managerId, managerEmail, managerOffice);
-    console.log(manager);
-    if(response.create !== 'Finish') {
-        createAnother(response.create);
+const createManager = response => {
+    const {name, id, email, office, create} = response;
+    const manager = new Manager(name, id, email, office);
+    employees.push(manager);
+    createAnotherOrFinish(create);
+}
+
+const createEngineer = response => {
+    const {name, id, email, github, create} = response;
+    const engineer = new Engineer(name, id, email, github);
+    employees.push(engineer);
+    createAnotherOrFinish(create);
+}
+
+const createIntern = response => {
+    const {name, id, email, school, create} = response;
+    const intern = new Intern(name, id, email, school);
+    employees.push(intern);
+    createAnotherOrFinish(create);
+}
+
+const createAnotherOrFinish = answer => {
+    if(answer !== 'Finish') {
+        askAndCreate(answer.toLowerCase());
+    } else {
+        createHtml(employees);
     }
-});
+}
 
-const createAnother = employee => {
-    switch (employee) {
-        case 'Engineer':
-            createEngineer();
-            break;
-        case 'Intern':
-            createEngineer();
-            break;
-        default:
-            break;
-    }
-};
+const askAndCreate = employee => {
 
+    const Qs = [
+        {
+            type: 'input',
+            message: `What is the Team Manager's Name? `,
+            name: 'name',
+            when: () => {return employee === 'manager'}
+        },
+        {
+            type: 'input',
+            message: `What is their Name? `,
+            name: 'name',
+            when: () => {return employee !== 'manager'}
+        },
+        {
+            type: 'input',
+            message: `What is their employee id? `,
+            name: 'id'
+        },
+        {
+            type: 'input',
+            message: `What is the their Email Address? `,
+            name: 'email'
+        },
+        {
+            type: 'input',
+            message: `What is the their Office Number? `,
+            name: 'office',
+            when: () => {return employee === 'manager'}
+        },
+        {
+            type: 'input',
+            message: `What is the their Github username? `,
+            name: 'github',
+            when: () => {return employee === 'engineer'}
+        },
+        {
+            type: 'input',
+            message: `What is the their School Name? `,
+            name: 'school',
+            when: () => {return employee === 'intern'}
+        },
+        {
+            type: 'list',
+            message: `Would you like to add another employee or finish? `,
+            name: 'create',
+            choices: ['Engineer', 'Intern', "Finish"]
+        },
+    ];
 
-const createEngineer = () => {
-    inquirer.prompt(engineerQs).then((response) => {
-        const {engineerName, engineerId, engineerEmail, engineerGithub} = response;
-        const engineer = new Engineer(engineerName, engineerId, engineerEmail, engineerGithub);
-        console.log(engineer);
-        if(response.create !== 'Finish') {
-            createAnother(response.create);
+    inquirer.prompt(Qs).then((response) => {
+
+        switch (employee) {
+            case 'manager':
+                createManager(response);
+                break;
+            case 'engineer':
+                createEngineer(response);
+                break;
+            case 'intern':
+                createIntern(response);
+                break;
+            default:
+                break;
         }
     });
+};
+
+const init = () => {
+    askAndCreate('manager');
 }
+
+init();
