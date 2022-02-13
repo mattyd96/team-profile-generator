@@ -1,24 +1,26 @@
 const createHead = () => {
     return `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Font Awesome -->
-        <script src="https://kit.fontawesome.com/3313f8bd4c.js" crossorigin="anonymous"></script>
-        <!-- stylesheet -->
-        <link rel="stylesheet" href="./style.css">
-        <!-- Title -->
-        <title>My Team</title>
-    </head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" 
+    integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- stylesheet -->
+    <link rel="stylesheet" href="./style.css">
+    <!-- Title -->
+    <title>My Team</title>
+</head>
     `;
 };
 
 const createBodyStart = () => {
     return `
-    <body>
+<body>
     <!-- Heading -->
     <header>
         <h1>My Team</h1>
@@ -33,15 +35,14 @@ const createBodyStart = () => {
 const createBodyEnd = () => {
     return `
         </section>
-        </main>
-    </body>
-    </html>
+    </main>
+</body>
+</html>
     `;
 }
 
 const createCard = employee => {
     const position = employee.constructor.name;
-    console.log(typeof(position));
     const icons = {
         Manager: 'fa-mug-hot',
         Engineer: 'fa-glasses',
@@ -51,30 +52,32 @@ const createCard = employee => {
 
     switch (position) {
         case 'Manager':
-            uniqueElement = `<p class="office">Office: ${employee.office}</p>`;
+            uniqueElement = `<p class="office"><span>Office:</span><span>${employee.officeNumber}</span></p>`;
             break;
         case 'Engineer':
-            uniqueElement = `<p class="github">Github: <a href="https://github.com/${employee.github}" target="blank">${employee.github}</a></p>`;
+            uniqueElement = `<p class="github">Github:<a href="https://github.com/${employee.github}" target="blank">${employee.github}</a></p>`;
             break;
         default:
-            uniqueElement = `<p class="school">School: ${employee.school}</p>`;
+            uniqueElement = `<p class="school"><span>School:</span><span>${employee.school}</p></span>`;
             break;
     }
+    
     return`
-    <article class="card employee">
-        <section class="employee-head ${position.toLowerCase()}">
-            <h2 class="name">${employee.name}</h2>
-            <span class="position">
-                <i class="fa-solid ${icons[position]}"></i>
-                <span>${position}</span>
-            </span>
-        </section>
-        <section class="employee-body">
-            <p class="id">ID: ${employee.id}</p>
-            <p>Email: <a href="mailto:${employee.email}">${employee.email}</a></p>
-            ${uniqueElement}
-        </section>
-    </article>
+            <!-- employee card -->
+            <article class="card employee">
+                <section class="employee-head ${position.toLowerCase()}">
+                    <h2 class="name">${employee.name}</h2>
+                    <span class="position">
+                        <i class="fa-solid ${icons[position]}"></i>
+                        <span>${position}</span>
+                    </span>
+                </section>
+                <section class="employee-body">
+                    <p class="id"><span>ID:</span> <span>${employee.id}</span></p>
+                    <p>Email:<a href="mailto:${employee.email}">${employee.email}</a></p>
+                    ${uniqueElement}
+                </section>
+            </article>
     `;
 
 };

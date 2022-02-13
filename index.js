@@ -60,6 +60,23 @@ const createAnotherOrFinish = answer => {
     }
 }
 
+const verifyEmail = input => {
+    return new Promise((resolve, reject) => {
+        input.includes('@') ? resolve(true) : reject('Please enter a valid email.');
+    });
+}
+
+const checkUnique = input => {
+    return new Promise((resolve, reject) => {
+        for(const employee of employees) {
+            if(input === employee.id) {
+                reject('This id already exists in your group.');
+            }
+        }
+        resolve(true);
+    });
+}
+
 const askAndCreate = employee => {
 
     const Qs = [
@@ -78,28 +95,30 @@ const askAndCreate = employee => {
         {
             type: 'input',
             message: `What is their employee id? `,
-            name: 'id'
+            name: 'id',
+            validate: (id) => {return checkUnique(id)}
         },
         {
             type: 'input',
-            message: `What is the their Email Address? `,
-            name: 'email'
+            message: `What is their Email Address? `,
+            name: 'email',
+            validate: (email) => {return verifyEmail(email)}
         },
         {
             type: 'input',
-            message: `What is the their Office Number? `,
+            message: `What is their Office Number? `,
             name: 'office',
             when: () => {return employee === 'manager'}
         },
         {
             type: 'input',
-            message: `What is the their Github username? `,
+            message: `What is their Github username? `,
             name: 'github',
             when: () => {return employee === 'engineer'}
         },
         {
             type: 'input',
-            message: `What is the their School Name? `,
+            message: `What is their School Name? `,
             name: 'school',
             when: () => {return employee === 'intern'}
         },
