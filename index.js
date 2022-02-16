@@ -104,15 +104,8 @@ const askAndCreate = employee => {
     const Qs = [
         {
             type: 'input',
-            message: `What is the Team Manager's Name? `,
+            message: `What is the ${employee}'s Name? `,
             name: 'name',
-            when: () => {return employee === 'manager'}
-        },
-        {
-            type: 'input',
-            message: `What is their Name? `,
-            name: 'name',
-            when: () => {return employee !== 'manager'}
         },
         {
             type: 'input',
