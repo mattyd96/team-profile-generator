@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a Team Profile Generator. A user can enter information for a team consisting of a manager, engineers, and interns to create an html and with accompanying css file to easily display team members and their information for quick referencing 
+This is a Team Profile Generator. A user can enter information for a team consisting of a manager, engineers, and interns to create an html and accompanying css file to easily display team members and their information for quick referencing 
 It has been developed to the following user story and acceptance criteria.
 
 ## User Story
@@ -50,6 +50,7 @@ A prerequisite to using this code is having Node.js.
 3. Type in  `npm install`. This will set up all the packages you need.
 4. Type in `node index.js`
 5. Follow the prompts in the command line
+6. when you select finish an html will be generated in the dist folder, use that with the css file there to see your web page.
 <br/>
 <br/>
 
