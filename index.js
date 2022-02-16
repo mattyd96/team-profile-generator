@@ -25,7 +25,7 @@ const writeDoc = (fileName, data) => {
     const text = createHtml(data);
 
     fs.writeFile(fileName, text, (err) =>
-        err ? console.error(err) : console.log('Commit logged!')
+        err ? console.error(err) : console.log('\nHTML Generated!')
     );
 };
 
