@@ -63,6 +63,12 @@ https://user-images.githubusercontent.com/26681440/154242669-38b56e5e-4a16-44f3-
 
 <br/>
 
+## Test
+
+```md
+npm test
+```
+
 ## License
 
 MIT
